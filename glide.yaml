@@ -1,0 +1,5 @@
+package: github.com/rai-project/xj2s
+import:
+- package: github.com/clbanning/mxj
+  version: ~1.5.0
+- package: github.com/knq/snaker

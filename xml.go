@@ -3,6 +3,8 @@ package xj2s
 import (
 	"regexp"
 	"strings"
+
+	"github.com/knq/snaker"
 )
 
 func XmlPath2SrtructLinesNoNesting(paths []string) (string, map[string]StructNode, map[string]map[string]StructNode) {
@@ -23,7 +25,7 @@ func XmlPath2SrtructLinesNoNesting(paths []string) (string, map[string]StructNod
 		last := splitedPath[len(splitedPath)-1]
 		if strings.Index(last, "-") == 0 { //Attr
 			if RootName == splitedPath[len(splitedPath)-2] { //RootAttr
-				NodeName := strings.Title(last[1:])
+				NodeName := snaker.SnakeToCamel(last[1:])
 				xmlRoute := "`xml:" + `"` + last[1:] + `,attr"` + "`"
 				if _, exist := deDuplicateMap[NodeName]; exist {
 					if deDuplicateMap[NodeName] != xmlRoute {
@@ -36,7 +38,7 @@ func XmlPath2SrtructLinesNoNesting(paths []string) (string, map[string]StructNod
 				StructLineAppend := StructNode{Name: NodeName, Type: "string", Path: xmlRoute}
 				RootStruct[xmlRoute] = StructLineAppend
 			} else { //NoneRootAttr
-				NodeName := strings.Title(splitedPath[len(splitedPath)-2])
+				NodeName := snaker.SnakeToCamel(splitedPath[len(splitedPath)-2])
 				xmlRoute := strings.Join(splitedPath[1:len(splitedPath)-1], ">")
 				xmlPath := "`xml:" + `"` + xmlRoute + `"` + "`"
 				Stype := NodeName
@@ -47,7 +49,7 @@ func XmlPath2SrtructLinesNoNesting(paths []string) (string, map[string]StructNod
 					if deDuplicateMap[NodeName] != xmlRoute {
 						NodeName = ""
 						for _, v := range strings.Split(xmlRoute, ">") {
-							NodeName = strings.Title(v) + NodeName
+							NodeName = snaker.SnakeToCamel(v) + NodeName
 						}
 						deDuplicateMap[NodeName] = xmlRoute
 					}
@@ -57,7 +59,7 @@ func XmlPath2SrtructLinesNoNesting(paths []string) (string, map[string]StructNod
 				StructLineAppend := StructNode{Name: NodeName, Type: Stype, Path: xmlPath}
 				RootStruct[xmlRoute] = StructLineAppend
 
-				LeafName := strings.Title(last[1:])
+				LeafName := snaker.SnakeToCamel(last[1:])
 				RsetStructLineAppend := StructNode{Name: LeafName, Type: "string", Path: "`xml:" + `"` + last[1:] + `,attr"` + "`"}
 
 				// log.Println(NodeName, LeafName)
@@ -72,7 +74,7 @@ func XmlPath2SrtructLinesNoNesting(paths []string) (string, map[string]StructNod
 			}
 		} else if strings.Index(last, "#") == 0 { //chardata
 			if RootName == splitedPath[len(splitedPath)-2] { //RootChartata
-				NodeName := strings.Title(last[1:])
+				NodeName := snaker.SnakeToCamel(last[1:])
 				xmlRoute := "`xml:" + `",chardata"` + "`"
 				if _, exist := deDuplicateMap[NodeName]; exist {
 					if deDuplicateMap[NodeName] != xmlRoute {
@@ -85,7 +87,7 @@ func XmlPath2SrtructLinesNoNesting(paths []string) (string, map[string]StructNod
 				StructLineAppend := StructNode{Name: NodeName, Type: "string", Path: xmlRoute}
 				RootStruct[xmlRoute] = StructLineAppend
 			} else { //NonRootChardata
-				NodeName := strings.Title(splitedPath[len(splitedPath)-2])
+				NodeName := snaker.SnakeToCamel(splitedPath[len(splitedPath)-2])
 				xmlRoute := strings.Join(splitedPath[1:len(splitedPath)-1], ">")
 				xmlPath := "`xml:" + `"` + xmlRoute + `"` + "`"
 				Stype := NodeName
@@ -96,7 +98,7 @@ func XmlPath2SrtructLinesNoNesting(paths []string) (string, map[string]StructNod
 					if deDuplicateMap[NodeName] != xmlRoute {
 						NodeName = ""
 						for _, v := range strings.Split(xmlRoute, ">") {
-							NodeName = strings.Title(v) + NodeName
+							NodeName = snaker.SnakeToCamel(v) + NodeName
 						}
 						deDuplicateMap[NodeName] = xmlRoute
 					}
@@ -106,7 +108,7 @@ func XmlPath2SrtructLinesNoNesting(paths []string) (string, map[string]StructNod
 				StructLineAppend := StructNode{Name: NodeName, Type: Stype, Path: xmlPath}
 				RootStruct[xmlRoute] = StructLineAppend
 
-				LeafName := strings.Title(last[1:])
+				LeafName := snaker.SnakeToCamel(last[1:])
 				RsetStructLineAppend := StructNode{Name: LeafName, Type: "string", Path: "`xml:" + `",chardata"` + "`"}
 
 				if _, exist := RestStructs[NodeName]; exist {
@@ -118,7 +120,7 @@ func XmlPath2SrtructLinesNoNesting(paths []string) (string, map[string]StructNod
 				}
 			}
 		} else { //NormalString
-			NodeName := strings.Title(splitedPath[len(splitedPath)-1])
+			NodeName := snaker.SnakeToCamel(splitedPath[len(splitedPath)-1])
 			xmlRoute := strings.Join(splitedPath[1:], ">")
 			xmlPath := "`xml:" + `"` + xmlRoute + `"` + "`"
 			Stype := "string"
@@ -129,7 +131,7 @@ func XmlPath2SrtructLinesNoNesting(paths []string) (string, map[string]StructNod
 				if deDuplicateMap[NodeName] != xmlRoute {
 					NodeName = ""
 					for _, v := range strings.Split(xmlRoute, ">") {
-						NodeName = strings.Title(v) + NodeName
+						NodeName = snaker.SnakeToCamel(v) + NodeName
 					}
 					deDuplicateMap[NodeName] = xmlRoute
 				}
@@ -140,5 +142,5 @@ func XmlPath2SrtructLinesNoNesting(paths []string) (string, map[string]StructNod
 			RootStruct[xmlRoute] = StructLineAppend
 		}
 	}
-	return strings.Title(RootName), RootStruct, RestStructs
+	return snaker.SnakeToCamel(RootName), RootStruct, RestStructs
 }

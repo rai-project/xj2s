@@ -2,9 +2,7 @@ package xj2s
 
 import (
 	"github.com/clbanning/mxj"
-	// "fmt"
-	// "regexp"
-	"strings"
+	"github.com/knq/snaker"
 )
 
 type StructNode struct {
@@ -37,7 +35,7 @@ func Json2Struct(jdata []byte, RootName string, Nesting bool) string {
 		return "Not implement yet..."
 	} else {
 		RootStruct, RestStructs := JsonPath2SrtructLinesNoNesting(paths)
-		return RootDatas2Struct(strings.Title(RootName), RootStruct, RestStructs)
+		return RootDatas2Struct(snaker.SnakeToCamel(RootName), RootStruct, RestStructs)
 	}
 }
 

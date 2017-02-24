@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/wicast/xj2s"
 	"io/ioutil"
 	"os"
 	"runtime"
+
+	"github.com/rai-project/xj2s"
 )
 
 func usage() {

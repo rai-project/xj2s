@@ -3,6 +3,8 @@ package xj2s
 import (
 	"regexp"
 	"strings"
+
+	"github.com/knq/snaker"
 )
 
 func JsonPath2SrtructLinesNoNesting(paths []string) (map[string]StructNode, map[string]map[string]StructNode) {
@@ -18,7 +20,7 @@ func JsonPath2SrtructLinesNoNesting(paths []string) (map[string]StructNode, map[
 		path = strings.Replace(path, "[]", "", -1)
 		splitedPath := strings.Split(path, ".")
 		last := splitedPath[len(splitedPath)-1]
-		NodeName := strings.Title(last)
+		NodeName := snaker.SnakeToCamel(last)
 		jsonRoute := strings.Join(splitedPath, ">")
 		jsonPath := "`json:" + `"` + jsonRoute + `"` + "`"
 		Stype := "string"
@@ -29,7 +31,7 @@ func JsonPath2SrtructLinesNoNesting(paths []string) (map[string]StructNode, map[
 			if deDuplicateMap[NodeName] != jsonRoute {
 				NodeName = ""
 				for _, v := range strings.Split(jsonRoute, ">") {
-					NodeName = strings.Title(v) + NodeName
+					NodeName = snaker.SnakeToCamel(v) + NodeName
 				}
 				deDuplicateMap[NodeName] = jsonRoute
 			}

@@ -9,7 +9,7 @@ If you want to modify a xml/json data,My recommandation is to use `github.com/cl
 
 ### Installation
 you should setup your $GOPATH properely  
-`go get github.com/wicast/xj2s/cmd/...`
+`go get github.com/rai-project/xj2s/cmd/...`
 
 And a executable called `xmljson2struct` will be appear in your $GOPATH/bin directory.
 

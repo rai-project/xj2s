@@ -1,0 +1,10 @@
+{
+    "dependencies": {
+        "github.com/clbanning/mxj": {
+            "branch": "master"
+        },
+        "github.com/knq/snaker": {
+            "branch": "master"
+        }
+    }
+}
