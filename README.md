@@ -1,4 +1,4 @@
-# XJ2S: A small tool for Golang to generate Golang struct from a xml/json file
+# XJ2S: A small tool for Golang to generate Golang struct from a xml/json file [![Build Status](https://travis-ci.org/rai-project/xj2s.svg?branch=master)](https://travis-ci.org/rai-project/xj2s)
 
 The generated struct can be used for a `Unmarshal()` function from a `encoding/xml` or `encoding/json` package
 
