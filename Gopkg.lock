@@ -2,20 +2,27 @@
 
 
 [[projects]]
+  digest = "1:8d27e60bdf59c1e72a376e0304d8871224efdbd102218c7a22333214938e8695"
   name = "github.com/clbanning/mxj"
   packages = ["."]
+  pruneopts = "UT"
   revision = "1f00e0bf9bacd7ea9c93d27594d1d1f5a41bac36"
   version = "v1.8"
 
 [[projects]]
   branch = "master"
+  digest = "1:901625a0300fa83074dcf2510424c26a19dc3edadf67b34ca45a78f879ac4b0c"
   name = "github.com/knq/snaker"
   packages = ["."]
+  pruneopts = "UT"
   revision = "d9ad1e7f342a5b58202aa92c5f1106d7bb8b9c73"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "3b6bab0032132e8006ee23fd0418f659e19cc5ad8add9804e2bafcb8bb68e53d"
+  input-imports = [
+    "github.com/clbanning/mxj",
+    "github.com/knq/snaker",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
